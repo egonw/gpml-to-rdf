@@ -8,22 +8,14 @@ all: rdf
 pathways.txt:
 	@find orig-renamed -name "*gpml" | cut -d'/' -f2 | sort | grep "PC" | cut -d'.' -f1 > pathways.txt
 
-rdf: ${GPMLRDFS}
+rdf: ${GPMLRDFS} ${WPRDFS}
 gpml: ${GPMLS}
 
-wp/Human/%.ttl: orig-renamed/%.gpml src/java/main/org/wikipathways/curator/CreateRDF.class
+wp/Human/%.ttl: orig-renamed/%.gpml
 	@echo "Creating $@ WPRDF from $< ..."
 	@mkdir -p wp/Human
-	@xpath -q -e "string(/Pathway/@Version)" $< | cut -d'_' -f2 | xargs java -cp src/java/main/.:${GPMLRDFJAR} org.wikipathways.curator.CreateRDF $< $@
+	@xpath -q -e "string(/Pathway/@version)" $< | cut -d'_' -f2 | xargs java -cp ${GPMLRDFJAR} org.wikipathways.wp2rdf.CreateRDF $< $@
 
-wp/gpml/Human/%.ttl: orig-renamed/%.gpml src/java/main/org/wikipathways/curator/CreateGPMLRDF.class
+wp/gpml/Human/%.ttl: orig-renamed/%.gpml
 	@mkdir -p wp/gpml/Human
-	@xpath -q -e "string(/Pathway/@Version)" $< | cut -d'_' -f2 | xargs java -cp src/java/main/.:${GPMLRDFJAR} org.wikipathways.curator.CreateGPMLRDF $< $@
-
-src/java/main/org/wikipathways/curator/CreateRDF.class: src/java/main/org/wikipathways/curator/CreateRDF.java
-	@echo "Compiling $@ ..."
-	@javac -cp ${GPMLRDFJAR} src/java/main/org/wikipathways/curator/CreateRDF.java
-
-src/java/main/org/wikipathways/curator/CreateGPMLRDF.class: src/java/main/org/wikipathways/curator/CreateGPMLRDF.java
-	@echo "Compiling $@ ..."
-	@javac -cp ${GPMLRDFJAR} src/java/main/org/wikipathways/curator/CreateGPMLRDF.java
+	@xpath -q -e "string(/Pathway/@version)" $< | cut -d'_' -f2 | xargs java -cp ${GPMLRDFJAR} org.wikipathways.wp2rdf.CreateGPMLRDF $< $@
