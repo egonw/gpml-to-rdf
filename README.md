@@ -2,6 +2,8 @@
 
 This README explains the step you need to do to generate the RDF for the GPML pathways.
 
+This code depends on the WikiPathways projects libGPML and GPMLRDF stack to create RDF.
+
 ## Get the data
 
 Download the plant pathways:
