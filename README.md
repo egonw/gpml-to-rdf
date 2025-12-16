@@ -10,20 +10,26 @@ Download the plant pathways:
 gh repo clone pathway-lod/Cyc_to_wiki
 ```
 
-and save them in the `orig` folder:
+and save them in the `orig` folders:
 
 ```shell
 cd gpml-to-rdf
-mkdir orig; cd orig
-cp ../../Cyc_to_wiki/biocyc_pathways_20251121085146/individual_pathways/*gpml
+mkdir orig-pw; cd orig-pw
+cp ../../Cyc_to_wiki/biocyc_pathways_20251206224344/individual_pathways/*gpml .
+cd ..
+mkdir orig-react; cd orig-react
+cp ../../Cyc_to_wiki/biocyc_pathways_20251206224344/individual_reactions/*gpml .
+cd ..
 ```
 
 Renamed the files and put the results in `orig-renamed/`:
 
 ```shell
 cd ..
-mkdir orig-renamed
-groovy createGPMLfiles.groovy
+mkdir orig-pw-renamed
+groovy createPathwayfiles.groovy
+mkdir orig-react-renamed
+groovy createReactionfiles.groovy
 ```
 
 Then create the RDF with:
