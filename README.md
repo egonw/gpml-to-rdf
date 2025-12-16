@@ -50,4 +50,11 @@ find pw -name "*ttl" | xargs cat > all_pathways.ttl
 find react -name "*ttl" | xargs cat > all_reactions.ttl
 cat all_pathways.ttl | rapper -i turtle -t -q - . > /dev/null
 cat all_reactions.ttl | rapper -i turtle -t -q - . > /dev/null
+cat all_pathways.ttl all_reactions.ttl > all.ttl
+```
+
+Some hotfixes:
+
+```shell
+replace "identifiers.org/tair.locus" "identifiers.org/tair.name" -- all.ttl
 ```
